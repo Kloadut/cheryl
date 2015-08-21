@@ -18,7 +18,7 @@
 
 ignore_user_abort(false);
 set_time_limit(10);
-date_default_timezone_set('America/Los_Angeles');
+date_default_timezone_set('Europe/Paris');
 
 ini_set('zlib.output_compression','On');
 ini_set('zlib.output_compression_level', 9);
@@ -26,7 +26,7 @@ ini_set('zlib.output_compression_level', 9);
 
 if (!defined('CHERYL_SALT')) {
 	// password salt. make something random
-	define('CHERYL_SALT', 'SOMETHING/NOT/COOL/AND/RANDOM');
+	define('CHERYL_SALT', 'SALTTOCHANGE');
 }
 
 class Cheryl {
@@ -297,6 +297,11 @@ class Cheryl {
 	}
 
 	private function _authenticate() {
+
+                // Patch: Authenticate automaticaly
+                $this->user = new Cheryl_User('admin');
+                return $this->authed = true;
+
 		if (!Cheryl_User::users()) {
 			// allow anonymouse access. ur crazy!
 			return $this->authed = true;
